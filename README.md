@@ -1,77 +1,97 @@
-# 🎨 Velzon Theme with Login UI - Laravel Blade Templating
+# 🔐 Velzon Auth App - Laravel Manual Authentication
 
-A clean, production-ready Laravel Blade templating setup extending the base **Velzon Admin & Dashboard Theme** with a fully styled, responsive **Login Page**. 
+A fully functional Laravel authentication system built from scratch (without Laravel Breeze or Jetstream) integrated with the beautiful **Velzon Admin Theme**. 
 
-This repository contains **pure UI only** (no backend authentication logic, database queries, or session handling). It is designed to be the perfect stepping stone for developers who want to integrate Velzon's beautiful auth screens into their Laravel projects before adding custom backend logic.
+This repository demonstrates a complete **Manual Authentication Flow** (Login, Logout, and Route Protection) using Laravel's core features, combined with a professional, production-ready UI.
 
 ---
 
-## 📦 IMPORTANT: Download Theme Assets (Required)
+## ✨ Key Features
 
-Due to GitHub's file size limits, the theme's static assets (CSS, JS, Images, Fonts, and Libraries) are **not** included in this repository. You must download them manually before running the project.
+- ✅ **Manual Authentication**: Custom `LoginController` handling login logic, validation, and `Auth::attempt()`.
+- ✅ **Session Management**: Secure session regeneration and invalidation on login/logout.
+- ✅ **Route Protection**: Dashboard protected using Laravel's built-in `auth` middleware.
+- ✅ **Velzon UI Integration**: Beautiful, responsive login page and dashboard using the Velzon Admin Theme.
+- ✅ **Pure MVC Architecture**: Clean separation of Routes, Controllers, and Blade Views.
+
+---
+
+## 📦 IMPORTANT: Download Theme Assets
+
+Due to GitHub's file size limits, the theme's static assets are hosted externally.
 
 🔗 **Google Drive Link:** [Velzon Theme Assets](https://drive.google.com/drive/folders/1m_QJfs4-TQ0vzx1bCQw_AeKkJceOPkSG?usp=sharing)
 
-### **Setup Instructions:**
-1. Download the `assets` folder (or `assets.zip`) from the Drive link above.
-2. Extract it (if zipped).
-3. Place the `assets` folder directly inside your Laravel project's `public/` directory.
-   - **Correct Path:** `your-project/public/assets/` (It must contain `css`, `js`, `images`, `libs`, etc.)
+**Setup Instructions:**
+1. Download the `assets` folder from the Drive link.
+2. Place it directly inside the `public/` directory.
+   - **Correct Path:** `your-project/public/assets/`
 
 ---
 
 ## 🚀 Installation & Setup
 
-Follow these steps to get the templating running on your local machine:
-
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/AbdulBasitx19/velzon-theme-with-login-ui.git
-cd velzon-theme-with-login-ui
+git clone https://github.com/AbdulBasitx19/velzon-auth-app.git
+cd velzon-auth-app
 ```
-### 2.Install PHP Dependencies
+### 2.Install Dependencies
+```bash
 composer install
+```
 ### 3. Setup Environment
-# Copy the example environment file
+```bash
 cp .env.example .env
-
-# Generate a new application key
 php artisan key:generate
+```
+### 4. Database Setup
+Update your .env file with your database credentials:
+DB_CONNECTION=mysql
+DB_DATABASE=velzon_auth
+DB_USERNAME=root
+DB_PASSWORD=
 
-### 4. Download Assets
-Follow the "Download Theme Assets" instructions above and place the folder in public/.
+Run migrations to create the users and sessions tables:
+```bash
+php artisan migrate
+```
 
-### 5. Start the Development Server
+### 5. Create a Test User (via Tinker)
+```bash
+php artisan tinker
+App\Models\User::create(['name' => 'Test User', 'email' => 'test@example.com', 'password' => bcrypt('password123')])
+exit
+```
+### 6. Download Assets
+Follow the "Download Theme Assets" instructions above.
+
+### 7. Start the Server
+```bash
 php artisan serve
+```
 
-### 6. View the Templates
-Open your browser and navigate to:
-Dashboard UI: http://127.0.0.1:8000/dashboard
-Login UI: http://127.0.0.1:8000/login
+📂 Project Structure
+app/Http/Controllers/
+└── LoginController.php       # Handles Login & Logout logic
 
-###  📂 Project Structure
 resources/views/
 ├── auth/
-│   ├── auth-master.blade.php       # Dedicated skeleton for auth pages (centered layout)
-│   ├── head-css.blade.php          # Auth-specific CSS includes
-│   ├── scripts.blade.php           # Auth-specific JS includes (e.g., password toggle)
-│   ├── footer.blade.php            # Auth page footer
-│   └── login.blade.php             # The main Login UI page (Form, Alerts, Carousel)
+│   ├── auth-master.blade.php # Layout for auth pages
+│   ├── head-css.blade.php    # Auth specific CSS
+│   ├── scripts.blade.php     # Auth specific JS
+│   ├── footer.blade.php      # Auth footer
+│   └── pages/
+│       └── login.blade.php   # The Login UI form
 │
-└── layouts/
-    ├── master.blade.php            # Main dashboard skeleton
-    ├── head-css.blade.php          # Global CSS and CDN links
-    ├── scripts.blade.php           # Global JS, jQuery, and CDN scripts
-    ├── topbar.blade.php            # Header, search, notifications, user dropdown
-    ├── sidebar.blade.php           # Navigation menu
-    ├── footer.blade.php            # Page footer
-    ├── body-tools.blade.php        # Preloader and back-to-top button
-    ├── customizer.blade.php        # Theme settings offcanvas panel
-    ├── notification-modal.blade.php# Global confirmation modal
-    └── pages/
-        └── dashboard/
-            └── index.blade.php     # Main dashboard view (extends master)
+└── layouts/                  # Main Dashboard UI components
+    ├── master.blade.php
+    ├── topbar.blade.php
+    ├── sidebar.blade.php
+    └── ...
+
 
 ### 📄 License
-This templating setup is provided for educational and starter-project purposes. The Velzon theme itself is subject to its original licensing terms by Themesbrand.
-Built with ❤️ using Laravel 11+ and clean Blade templating practices.
+This project is for educational and portfolio purposes. The Velzon theme is subject to its original licensing terms by Themesbrand.
+
+Built with ❤️ using Laravel 11+ and clean MVC practices.
